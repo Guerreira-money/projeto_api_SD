@@ -1,6 +1,7 @@
-import firebaseConfig from './config/firebaseconfig.js';
+
 import dotenv from 'dotenv';
 import express from 'express';
+import { addTaskTest } from './services/add_tasks_service.js';
 
 dotenv.config();
 
@@ -15,5 +16,5 @@ app.listen(PORT, () => {
     console.log(`Server is running on port ${PORT}`);
 });
 
-
+addTaskTest();
 
