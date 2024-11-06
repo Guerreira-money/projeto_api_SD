@@ -3,14 +3,16 @@
   "version": "1.0.0",
   "description": "When you're ready, start your application by running: `docker compose up --build`.",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "start": "node index.js"
+    "start": "node src/index.js"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.5",
-    "express": "^4.21.1"
+    "express": "^4.21.1",
+    "firebase": "^11.0.1"
   }
 }
