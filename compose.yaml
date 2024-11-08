@@ -7,14 +7,59 @@
 # You can add other services your application may depend on here, such as a
 # database or a cache. For examples, see the Awesome Compose repository:
 # https://github.com/docker/awesome-compose
+
 services:
   server:
     build:
       context: .
+      dockerfile: Dockerfile  # Dockerfile da aplicação principal
     environment:
       NODE_ENV: production
     ports:
-      - 3000:3000
+      - 3000:3000  # Expondo a porta 3000 da aplicação principal
+    networks:
+      - app-network
+
+  auth_user_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.auth_user_service  # Dockerfile do serviço de autenticação
+    ports:
+      - 5001:5001  # Expondo a porta 5001 para o serviço
+    networks:
+      - app-network
+
+  password_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.passwordService  # Dockerfile do serviço de senha
+    ports:
+      - 5002:5002  # Expondo a porta 5002 para o serviço
+    networks:
+      - app-network
+
+  user_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.userService  # Dockerfile do serviço de usuário
+    ports:
+      - 5003:5003  # Expondo a porta 5003 para o serviço
+    networks:
+      - app-network
+
+  add_tasks_service:
+    build:
+      context: .
+      dockerfile: Dockerfile.add_tasks_service  # Dockerfile do serviço de tarefas
+    ports:
+      - 5004:5004  # Expondo a porta 5004 para o serviço
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
+
 
 # The commented out section below is an example of how to define a PostgreSQL
 # database that your application can use. `depends_on` tells Docker Compose to

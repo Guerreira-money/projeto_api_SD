@@ -5,8 +5,6 @@
 # https://docs.docker.com/go/build-context-dockerignore/
 node_modules
 npm-debug.log
-Dockerfile
-docker-compose.yml
 .git
 
 

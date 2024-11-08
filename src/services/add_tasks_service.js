@@ -1,4 +1,4 @@
-import { db } from '../config/firebaseconfig.js';
+/*import { db } from '../config/firebaseconfig.js';
 import { collection, addDoc, serverTimestamp } from 'firebase/firestore';
 
 // Função teste
@@ -15,3 +15,4 @@ export const addTaskTest = async () => {
     console.error("Erro ao adicionar tarefa:", error);
   }
 };
+*/
