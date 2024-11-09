@@ -15,7 +15,7 @@ app.use(bodyParser.json());
 app.use('/api/users', userRoutes);
 app.use('/api/users', logoutRoute);
 
-app.get('/', (req, res) => {
+app.get('/hello', (req, res) => {
   res.send('Hello World! Teste de rota');
 });
 
