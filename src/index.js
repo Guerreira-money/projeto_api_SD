@@ -3,6 +3,7 @@ import express from 'express';
 import bodyParser from 'body-parser';
 import userRoutes from './routes/userRoutes.js';
 import logoutRoute from './routes/logoutRouter.js'; 
+import taskRoutes from './routes/taskRouts.js';
 dotenv.config();
 
 const PORT = process.env.PORT || 3000;
@@ -14,6 +15,8 @@ app.use(bodyParser.json());
 // Usando as rotas de usuários
 app.use('/api/users', userRoutes);
 app.use('/api/users', logoutRoute);
+app.use("/api", taskRoutes);
+
 
 app.get('/', (req, res) => {
   res.send('Hello World!');

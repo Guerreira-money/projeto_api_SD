@@ -1,5 +1,4 @@
-# Usa uma imagem Node.js
-FROM node:22.11.0-alpine
+FROM node:20.18.0-alpine
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
@@ -11,7 +10,7 @@ COPY package*.json ./
 RUN npm install --omit=dev
 
 # Copia o arquivo do serviço para dentro do contêiner
-COPY src/services/auth_user_service.js ./auth_user_service.js
+COPY ./src/services/auth_user_service.js ./auth_user_service.js
 
 # Expõe a porta do serviço
 EXPOSE 5001

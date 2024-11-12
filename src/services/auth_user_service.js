@@ -5,7 +5,8 @@ import {
   deleteUser, 
   sendPasswordResetEmail 
 } from 'firebase/auth';
-import { auth, db } from '../config/firebaseconfig.js';
+import { auth } from '../config/firebaseconfig.js';
+import { db } from '../config/firebaseconfig.js';
 import { addDoc, collection } from 'firebase/firestore';
 import { emailExistsInAuth, emailExistsInFirestore } from '../models/userModel.js';
 

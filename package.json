@@ -1,7 +1,7 @@
 {
   "name": "projeto_api",
   "version": "1.0.0",
-  "description": "When you're ready, start your application by running: `docker compose up --build`.",
+  "description": "GRUPO DE ESTUDO SISTEMAS DISTRIBUIDOS.",
   "main": "index.js",
   "type": "module",
   "scripts": {
