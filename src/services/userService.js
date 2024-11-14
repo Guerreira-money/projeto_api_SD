@@ -1,9 +1,6 @@
 import { getUserById } from '../models/user.js';
 
 
-import { createPasswordResetToken, findPasswordResetToken, deletePasswordResetToken } from '../models/passwordResetToken.js';
- 
-
 // Função para redefinir a senha usando o token
 export const updatePasswordWithToken = async (resetToken, newPassword) => {
   // Verificar se o token de redefinição existe e não expirou
@@ -25,4 +22,3 @@ export const updatePasswordWithToken = async (resetToken, newPassword) => {
   // Remove o token de redefinição após o uso
   await resetRequest.remove();
 };
-

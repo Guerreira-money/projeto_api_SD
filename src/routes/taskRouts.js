@@ -1,5 +1,3 @@
-// src/routes/taskRoutes.js
-
 import express from 'express';
 import {addTaskTest, updateTaskController, deleteTaskController, getTaskController, getAllTasksController } from '../controllers/taskController.js';
 

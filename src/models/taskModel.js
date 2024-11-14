@@ -1,5 +1,3 @@
-// src/models/taskModel.js
-
 import { db } from '../config/firebaseconfig.js';
 import { collection, addDoc, doc, updateDoc, deleteDoc, getDoc, getDocs, serverTimestamp } from 'firebase/firestore';
 

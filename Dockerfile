@@ -1,5 +1,4 @@
-# Usa uma imagem Node.js
-FROM node:20.18.0-alpine
+FROM node:22.11.0-alpine
 
 # Define o diretório de trabalho dentro do contêiner
 WORKDIR /app
@@ -10,11 +9,11 @@ COPY package*.json ./
 # Instala as dependências do projeto
 RUN npm install --omit=dev
 
-# Copia o diretório `src` para dentro do contêiner
+# Copia todo o código para o contêiner
 COPY ./src /app/src
 
-# Expõe a porta do servidor
-EXPOSE 5000
+# Expõe a porta padrão do servidor 
+EXPOSE 3000
 
-# Comando para iniciar a aplicação
+# Define o comando para iniciar o serviço, com a possibilidade de personalizar o script a partir do docker-compose.yml
 CMD ["node", "src/index.js"]

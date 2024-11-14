@@ -1,23 +1,14 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getFirestore } from "firebase/firestore";
 import { getAuth } from "firebase/auth";
-import { fileURLToPath } from 'url'; // Adicionando a importação do 'url'
-import { dirname } from 'path'; // Mantenha a importação de 'path'
+import { fileURLToPath } from 'url'; // Importação do 'url' para obter o caminho do arquivo no ESM
+import { dirname } from 'path'; // Importação do 'path' para obter o diretório do arquivo
 import dotenv from "dotenv";
-
 
 dotenv.config();
 
-// Obter o diretório atual no ES Module
-const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
 
-// Verificar se as variáveis de ambiente estão sendo carregadas corretamente
-console.log("Diretório atual:", __dirname);
-console.log("API Key do Firebase:", process.env.API_KEY_FIREBASE); // Exemplo de verificar uma variável
-
-
+// Configurações do Firebase
 export const firebaseConfig = {
   apiKey: process.env.API_KEY_FIREBASE,
   authDomain: process.env.AUTHDOMAIN,
@@ -28,12 +19,10 @@ export const firebaseConfig = {
   measurementId: process.env.MEASUREMENTID
 };
 
-// Initialize Firebase
-const app = initializeApp(firebaseConfig);
+// Inicializar Firebase
+export const app = initializeApp(firebaseConfig);
 console.log("Eu sou Firebase e conectei!");
 
-// Initialize Cloud Firestore and authentication
-const db = getFirestore(app);
+// Inicializar Cloud Firestore e autenticação
+export const db = getFirestore(app);
 export const auth = getAuth(app);
-export { db };
-

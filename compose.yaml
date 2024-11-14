@@ -4,102 +4,22 @@ services:
       context: .
       dockerfile: Dockerfile
     environment:
-      - PORT=${PORT}
-      - API_KEY_FIREBASE=${API_KEY_FIREBASE}
-      - AUTHDOMAIN=${AUTHDOMAIN}
-      - PROJECTID=${PROJECTID}
-      - STORAGEBUCKET=${STORAGEBUCKET} 
-      - MESSAGINGSENDERID=${MESSAGINGSENDERID} 
-      - APPID=${APPID}
-      - MEASUREMENTID=${MEASUREMENTID}
+      - PORT=
+      - API_KEY_FIREBASE=
+      - AUTHDOMAIN=
+      - PROJECTID=
+      - STORAGEBUCKET=
+      - MESSAGINGSENDERID=
+      - APPID=
+      - MEASUREMENTID=
       - NODE_ENV=production
     ports:
-      - "3001:3000"
+      - "3000:3000"
+   
+    volumes:
+      - .:/app  # Monta o diretório atual no container 
     networks:
-      - app-network
-    depends_on:
-      - auth_user_service
-      - user_service
-      - password_service
-      - add_tasks_service
-
-  auth_user_service:
-    build:
-      context: .
-      dockerfile: Dockerfile.auth_user_service
-    environment:
-      - API_KEY_FIREBASE=${API_KEY_FIREBASE}
-      - AUTHDOMAIN=${AUTHDOMAIN}
-      - PROJECTID=${PROJECTID}
-      - STORAGEBUCKET=${STORAGEBUCKET} 
-      - MESSAGINGSENDERID=${MESSAGINGSENDERID} 
-      - APPID=${APPID}
-      - MEASUREMENTID=${MEASUREMENTID}
-    ports:
-      - "5001:5001"
-    networks:
-      - app-network
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5001"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-  password_service:
-    build:
-      context: .
-      dockerfile: Dockerfile.passwordService
-    environment:
-      - API_KEY_FIREBASE=${API_KEY_FIREBASE}
-    ports:
-      - "5002:5002"
-    networks:
-      - app-network
-    depends_on:
-      - auth_user_service
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5002"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-  user_service:
-    build:
-      context: .
-      dockerfile: Dockerfile.userService
-    environment:
-      - API_KEY_FIREBASE=${API_KEY_FIREBASE}
-    ports:
-      - "5003:5003"
-    networks:
-      - app-network
-    depends_on:
-      - auth_user_service
-      - password_service
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5003"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
-  add_tasks_service:
-    build:
-      context: .
-      dockerfile: Dockerfile.add_tasks_service
-    environment:
-      - API_KEY_FIREBASE=${API_KEY_FIREBASE}
-    ports:
-      - "5004:5004"
-    networks:
-      - app-network
-    depends_on:
-      - auth_user_service
-    healthcheck:
-      test: ["CMD", "curl", "-f", "http://localhost:5004"]
-      interval: 30s
-      timeout: 10s
-      retries: 5
-
+      - webnet  # Conecta o container a uma rede chamada 'webnet'
 networks:
-  app-network:
-    driver: bridge
+    webnet:
+     driver: bridge
