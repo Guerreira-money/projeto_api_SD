@@ -114,3 +114,36 @@ docker compose up --build
 ```
 
 A aplicação estará disponível em `http://localhost:3000`
+
+# O que falta fazer (Sugestão):
+
+1. Segurança
+
+- Falta: Implementar uma ferramenta de bloqueio de acesso aos endpoints, como API Keys ou Tokens.
+  - Ação: Adicionar middleware de autenticação usando JWT (Json Web Tokens) ou outra forma de autenticação segura.
+
+2. Documentação
+
+- Falta: Documentação detalhada da API com exemplos de requisições e respostas para cada endpoint.
+  - Ação: Completar a documentação no [Readme.md](/README.md) e considerar o uso de ferramentas como Swagger para documentação automática.
+
+3. Testes
+
+- Falta: Implementar testes unitários e de integração.
+  - Ação: Criar uma pasta `tests/` e adicionar testes para os controladores, serviços e rotas usando frameworks como Jest ou Mocha.
+
+4. Validação e Tratamento de Erros
+
+- Falta: Melhorar a validação de entrada e o tratamento de erros
+  - Ação: Adicionar validações usando bibliotecas como Joi ou express-validator e grantir que todos os endpoints retornem mensagens de erro apropriadas.
+
+5. Desempenho e Otimização
+
+- Falta: Revisar e otimizar consultas ao banco de dados e lógica de negócio.
+
+  - Ação: Analisar e otimizar as consultas no `taskModel.js`e `userModel.js` para melhorar o desempenho.
+
+  6. Melhorias Adicionais
+
+  - Falta: Funcionalidades adicionais como paginação, filtros de busca, e ordenação.
+    - Ação: Implementar paginação nos endpoints de listagem de itens e adicionar filtros e ordenação conforme o necessário.
