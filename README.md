@@ -115,6 +115,54 @@ docker compose up --build
 
 A aplicação estará disponível em `http://localhost:3000`
 
+#### Usando Swagger
+
+Para documentar a API usando Swagger, siga os passos abaixo:
+
+1. Instale as dependências necessárias:
+
+```
+npm install swagger-jsdoc swagger-ui-express
+```
+
+2. Adicione a configuração do Swagger no seu projeto. Crie um arquivo `swagger.js` na pasta `config` com o seguinte conteúdo:
+
+```js
+const swaggerJsdoc = require("swagger-jsdoc");
+const swaggerUi = require("swagger-ui-express");
+const express = require("express");
+const app = express();
+
+const options = {
+  definition: {
+    openapi: "3.0.0",
+    info: {
+      title: "API SD",
+      version: "1.0.0",
+      description: "Documentação da API SD",
+    },
+  },
+  apis: ["./src/routes/*.js"], // Caminho para os arquivos de rotas
+};
+
+const specs = swaggerJsdoc(options);
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
+
+module.exports = app;
+```
+
+3. Adicione a rota do Swagger no seu arquivo principal (por exemplo, `index.js`):
+
+```js
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./config/swagger");
+
+app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
+```
+
+4. Acesse a documentação da API em `http://localhost:3000/api-docs`.
+
 # O que falta fazer (Sugestão):
 
 1. Segurança
@@ -124,7 +172,7 @@ A aplicação estará disponível em `http://localhost:3000`
 
 2. Documentação
 
-- Falta: Documentação detalhada da API com exemplos de requisições e respostas para cada endpoint.
+- Falta: Documentação detalhada da API com exemplos de requisiç��es e respostas para cada endpoint.
   - Ação: Completar a documentação no [Readme.md](/README.md) e considerar o uso de ferramentas como Swagger para documentação automática.
 
 3. Testes
@@ -142,6 +190,17 @@ A aplicação estará disponível em `http://localhost:3000`
 - Falta: Revisar e otimizar consultas ao banco de dados e lógica de negócio.
 
   - Ação: Analisar e otimizar as consultas no `taskModel.js`e `userModel.js` para melhorar o desempenho.
+
+  - Renato (Ação Feita):
+
+    - `taskModel.js`: Verificar mudanças antes de atualizar, e implementar paginação.
+
+      - updateTask: Verificar se os dados realmente mudaram antes de atualizar.
+      - getAllTasks: Paginação para evitar carregar todos os docs de uma vez.
+
+    - `userModel.js`: Unificar a verificação de email para evitar consultas duplicadas.
+      - emailExistsInAuth: Unificar verificação de email p evita consultas duplicadas.
+      - emailExistsInFirestore: Unificar verificação de email p evitar consutlas duplicadas.
 
   6. Melhorias Adicionais
 

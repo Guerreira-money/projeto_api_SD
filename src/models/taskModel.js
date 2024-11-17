@@ -1,5 +1,14 @@
-import { db } from '../config/firebaseconfig.js';
-import { collection, addDoc, doc, updateDoc, deleteDoc, getDoc, getDocs, serverTimestamp } from 'firebase/firestore';
+import { db } from "../config/firebaseconfig.js";
+import {
+  collection,
+  addDoc,
+  doc,
+  updateDoc,
+  deleteDoc,
+  getDoc,
+  getDocs,
+  serverTimestamp,
+} from "firebase/firestore";
 
 // Função para criar uma nova tarefa
 export const createTask = async (taskData) => {
@@ -12,7 +21,7 @@ export const createTask = async (taskData) => {
       time: taskData.time,
       task_category: {
         task: taskData.task || "",
-        event: taskData.event || ""
+        event: taskData.event || "",
       },
       createdAt: serverTimestamp(),
     });
@@ -26,8 +35,16 @@ export const createTask = async (taskData) => {
 export const updateTask = async (id, updateData) => {
   try {
     const taskRef = doc(db, "tasks", id);
-    await updateDoc(taskRef, updateData);
-    return { message: "Tarefa atualizada com sucesso!" };
+    const taskDoc = await getDoc(taskRef);
+    if (
+      taskDoc.exists() &&
+      JSON.stringify(taskDoc.data()) !== JSON.stringify(updateData)
+    ) {
+      await updateDoc(taskRef, updateData);
+      return { message: "Tarefa atualizada com sucesso!" };
+    } else {
+      return { message: "Nenhuma alteração detectada." };
+    }
   } catch (error) {
     throw new Error("Erro ao atualizar tarefa: " + error.message);
   }
@@ -55,10 +72,18 @@ export const getTask = async (id) => {
 };
 
 // Função para obter todas as tarefas
-export const getAllTasks = async () => {
+export const getAllTasks = async (limit = 10, startAfter = null) => {
   try {
-    const tasksSnapshot = await getDocs(collection(db, "tasks"));
-    const tasks = tasksSnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+    let tasksQuery = collection(db, "tasks");
+    if (startAfter) {
+      tasksQuery = tasksQuery.startAfter(startAfter);
+    }
+    tasksQuery = tasksQuery.limit(limit);
+    const tasksSnapshot = await getDocs(tasksQuery);
+    const tasks = tasksSnapshot.docs.map((doc) => ({
+      id: doc.id,
+      ...doc.data(),
+    }));
     return tasks;
   } catch (error) {
     throw new Error("Erro ao buscar tarefas: " + error.message);
