@@ -15,14 +15,24 @@ const validateUserData = (email, password) => {
   }
 };
 
-// Função para verificar se o email já existe no Firebase Auth ou Firestore
-const emailExists = async (email) => {
+// Função para verificar se o email já existe no Firebase Auth
+const emailExistsInAuth = async (email) => {
   const usersRef = collection(db, "users");
   const q = query(usersRef, where("email", "==", email));
   const querySnapshot = await getDocs(q);
   if (!querySnapshot.empty) {
-    throw new Error("O email já está em uso");
+    throw new Error("O email já está em uso no Firestore");
   }
 };
 
-export { validateUserData, emailExists };
+// Função para verificar se o email já existe no Firestore
+const emailExistsInFirestore = async (email) => {
+  const usersRef = collection(db, "users");
+  const q = query(usersRef, where("email", "==", email));
+  const querySnapshot = await getDocs(q);
+  if (!querySnapshot.empty) {
+    throw new Error("O email já está em uso no Firebase");
+  }
+};
+
+export { validateUserData, emailExistsInAuth, emailExistsInFirestore };

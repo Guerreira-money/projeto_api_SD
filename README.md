@@ -115,54 +115,6 @@ docker compose up --build
 
 A aplicação estará disponível em `http://localhost:3000`
 
-#### Usando Swagger
-
-Para documentar a API usando Swagger, siga os passos abaixo:
-
-1. Instale as dependências necessárias:
-
-```
-npm install swagger-jsdoc swagger-ui-express
-```
-
-2. Adicione a configuração do Swagger no seu projeto. Crie um arquivo `swagger.js` na pasta `config` com o seguinte conteúdo:
-
-```js
-const swaggerJsdoc = require("swagger-jsdoc");
-const swaggerUi = require("swagger-ui-express");
-const express = require("express");
-const app = express();
-
-const options = {
-  definition: {
-    openapi: "3.0.0",
-    info: {
-      title: "API SD",
-      version: "1.0.0",
-      description: "Documentação da API SD",
-    },
-  },
-  apis: ["./src/routes/*.js"], // Caminho para os arquivos de rotas
-};
-
-const specs = swaggerJsdoc(options);
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(specs));
-
-module.exports = app;
-```
-
-3. Adicione a rota do Swagger no seu arquivo principal (por exemplo, `index.js`):
-
-```js
-const swaggerUi = require("swagger-ui-express");
-const swaggerDocument = require("./config/swagger");
-
-app.use("/api-docs", swaggerUi.serve, swaggerUi.setup(swaggerDocument));
-```
-
-4. Acesse a documentação da API em `http://localhost:3000/api-docs`.
-
 # O que falta fazer (Sugestão):
 
 1. Segurança

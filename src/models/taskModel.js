@@ -35,16 +35,8 @@ export const createTask = async (taskData) => {
 export const updateTask = async (id, updateData) => {
   try {
     const taskRef = doc(db, "tasks", id);
-    const taskDoc = await getDoc(taskRef);
-    if (
-      taskDoc.exists() &&
-      JSON.stringify(taskDoc.data()) !== JSON.stringify(updateData)
-    ) {
-      await updateDoc(taskRef, updateData);
-      return { message: "Tarefa atualizada com sucesso!" };
-    } else {
-      return { message: "Nenhuma alteração detectada." };
-    }
+    await updateDoc(taskRef, updateData);
+    return { message: "Tarefa atualizada com sucesso!" };
   } catch (error) {
     throw new Error("Erro ao atualizar tarefa: " + error.message);
   }
@@ -72,14 +64,9 @@ export const getTask = async (id) => {
 };
 
 // Função para obter todas as tarefas
-export const getAllTasks = async (limit = 10, startAfter = null) => {
+export const getAllTasks = async () => {
   try {
-    let tasksQuery = collection(db, "tasks");
-    if (startAfter) {
-      tasksQuery = tasksQuery.startAfter(startAfter);
-    }
-    tasksQuery = tasksQuery.limit(limit);
-    const tasksSnapshot = await getDocs(tasksQuery);
+    const tasksSnapshot = await getDocs(collection(db, "tasks"));
     const tasks = tasksSnapshot.docs.map((doc) => ({
       id: doc.id,
       ...doc.data(),
