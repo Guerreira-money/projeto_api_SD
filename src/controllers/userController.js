@@ -1,10 +1,10 @@
-import { 
-  signupUser, 
-  loginUser, 
-    deleteUserAccount, 
-  sendPasswordResetLink 
-} from '../services/auth_user_service.js';
-import { updatePasswordWithToken } from '../services/userService.js';
+import {
+  signupUser,
+  loginUser,
+  deleteUserAccount,
+  sendPasswordResetLink,
+} from "../services/auth_user_service.js";
+import { updatePasswordWithToken } from "../services/userService.js";
 
 // Controller para cadastro de usuário
 export const signup = async (req, res) => {
@@ -28,13 +28,12 @@ export const login = async (req, res) => {
   }
 };
 
-
 // Controller para deletar conta de usuário
 export const deleteUser = async (req, res) => {
   const { uid } = req.body;
   try {
     await deleteUserAccount(uid);
-    res.status(200).json({ message: 'Conta deletada com sucesso' });
+    res.status(200).json({ message: "Conta deletada com sucesso" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -45,7 +44,7 @@ export const changePassword = async (req, res) => {
   try {
     const { email } = req.body;
     await resetPassword(email);
-    res.status(200).json({ message: 'E-mail de redefinição de senha enviado' });
+    res.status(200).json({ message: "E-mail de redefinição de senha enviado" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -56,7 +55,7 @@ export const resetPasswordController = async (req, res) => {
   const { email } = req.body;
   try {
     await sendPasswordResetLink(email);
-    res.status(200).json({ message: 'Link de redefinição de senha enviado!' });
+    res.status(200).json({ message: "Link de redefinição de senha enviado!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
@@ -67,7 +66,7 @@ export const updatePasswordForUserController = async (req, res) => {
   const { resetToken, newPassword } = req.body;
   try {
     await updatePasswordWithToken(resetToken, newPassword);
-    res.status(200).json({ message: 'Senha atualizada com sucesso!' });
+    res.status(200).json({ message: "Senha atualizada com sucesso!" });
   } catch (error) {
     res.status(500).json({ error: error.message });
   }
