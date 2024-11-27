@@ -1,35 +1,24 @@
-import express from "express";
-import {
-  addTaskTest,
-  updateTaskController,
-  deleteTaskController,
-  getTaskController,
-  getAllTasksController,
-} from "../controllers/taskController.js";
 
-const router = express.Router();
+import { Router } from 'express';
+import { createTask, listTasks, modifyTask, removeTask } from '../controllers/taskController.js';
+import { verifyAuth } from "../middlewares/authMiddleware.js";
+const router = Router();
 
-// Rota para criar uma nova tarefa
+// Rota protegida para criar tarefas
+router.post("/create", verifyAuth, createTask);
 
-router.post("/tasks", async (req, res) => {
-  try {
-    await addTaskTest(req.body);
-    res.status(201).send("Tarefa adicionada com sucesso!");
-  } catch (error) {
-    res.status(500).send("Erro ao adicionar a tarefa.");
-  }
-});
+
+// Rota para listar todas as tarefas do usuário autenticado
+router.get('/:uid/tasks', verifyAuth, listTasks);
+
+
 
 // Rota para atualizar uma tarefa
-router.put("/tasks/:id", updateTaskController);
+router.put('/update/:taskId', verifyAuth, modifyTask);
+
+
 
 // Rota para deletar uma tarefa
-router.delete("/tasks/:id", deleteTaskController);
-
-// Rota para obter uma tarefa pelo ID
-router.get("/tasks/:id", getTaskController);
-
-// Rota para obter todas as tarefas
-router.get("/tasks", getAllTasksController);
+router.delete('/delete/:id', verifyAuth, removeTask);
 
 export default router;
